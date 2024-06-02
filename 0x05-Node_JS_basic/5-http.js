@@ -1,34 +1,35 @@
 const http = require('http');
-const fs = require('fs');
-const { promisify } = require('util');
+
+const args = process.argv.slice(2);
 const countStudents = require('./3-read_file_async');
 
-const readFileASync = promisify(fs.readFile);
+const DATABSAE = args[0];
+const hostname = '127.0.0.1';
+const port = 1245;
 
-const app = http.createrServer(async (req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
+const app = http.createServer(async (req, res) => {
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'text/plain');
 
-    const url = new URL(req.url, `http://${req.headers.host}`);
-    const path = url.pathname;
+	const { url } = req;
 
-    if (path === '/') {
-        res.end('Hello Holberton School!');
-    } else if (path === '/students') {
-        try {
-            const dbFileName = process.argv[2];
-            const data = await readFileASync(dbFileName, 'utf-8');
-            
-            await countStudents(dbFileName);
-            res.end('This is the list of our students');
-        } catch (error) {
-            res.end('Cannot load the database');
-        }
-    } else {
-        res.writeHead(404);
-        res.end('Not Found');
-    }
+	if (url === '/') {
+		res.write('Hello Holberton School!');
+	} else if (url === '/students') {
+		res.write('This is the list of our students\n');
+		try {
+			const students = await countStudents(DATABASE);
+			res.end(`${students.join('\n')}`);
+		} catch (error) {
+			res.end(error.message);
+		}
+	}
+	res.statusCode = 404;
+	res.end();
 });
 
-app.listen(1245);
+app.listen(port, hostname, () => {
+	console.log(`Server running at http:\\${hostname}:${port}`);
+});
 
 module.exports = app;

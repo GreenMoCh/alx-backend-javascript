@@ -1,39 +1,26 @@
 const fs = require('fs');
 
-/**
- * Read a CSV file and counts students per field
- * @param {string} path The path to the CSV file
- */
 function countStudents(path) {
-    try {
-        const data = fs.readFileSync(path, { encoding: 'utf-8' });
-        const lines = data.split('\n').filter(line => line.length > 0 && line !== 'firstname,lastname,age,feild');
+	try {
+		let data = fs.readFileSync(path, 'utf-8').toString().split('\n');
+		data = data.slice(1, data.length - 1);
+		console.log(`Number of students: ${data.length}`);
 
-        if (lines.length === 0) {
-            throw new Error('No data in CSV file');
-        }
-
-        const studentsPerField = {};
-
-        for (const line of lines) {
-            const [firstname, , , field] = line.split(',');
-
-            if (field in studentsPerField) {
-                studentsPerField[field].push(firstname);
-            } else {
-                studentsPerField[field] = [firstname];
-            }
-        }
-
-        const totalStudents = line.length;
-        console.log(`Number of students: ${totalStudents}`);
-
-        for (const [field, names] of Object.entries(studentsPerField)) {
-            console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
-        }
-    } catch (error) {
-        throw new Error('Cannot loaad the database');
-    }
+		const obj = {};
+		data.forEach((el) => {
+			const student = el.split(',');
+			if (!obj[student[3]]) obj[student[3]] = [];
+			obj[student[3]].push(student[0]);
+		});
+		for (const cls in obj) {
+			if (cls) {
+				console.log(`Number of students is ${cls}: ${obj[cls].length}. List: ${obj[cls].join(',')});
+			}
+		}
+	} catch (err) {
+		throw new Error('Cannot load the database');
+	}
 }
 
 module.exports = countStudents;
+

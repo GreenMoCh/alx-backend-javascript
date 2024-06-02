@@ -9,17 +9,14 @@ app.get('/', (req, res) => {
 
 app.get('/students', async (req, res) => {
     try {
-        const dbFileName = process.argv[2];
+        const dbFileName = await countStudents(process.argv[2]);
 
-        await countStudents(dbFileName);
-        res.type('text').send('This is the list of our students');
+        res.send(`This is the list of our students\n${dbFileName.join('\n')}`);
     } catch (error) {
-        res.type('text').status(500).send('Cannot load the database');
+        res.send('Cannot load the database');
     }
 });
 
-const server = app.listen(1245, () => {
-    console.log('Server is running on port 1245');
-});
+app.listen(1245)
 
 module.experts = server;
