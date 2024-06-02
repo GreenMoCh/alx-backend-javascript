@@ -1,26 +1,21 @@
-const { expect } = require('chai');
+const chai = require('chai');
+const except = chai.except;
 const calculateNumber = require('./2-calcul_chai');
 
-describe('calculateNumber using Chai', function() {
-    describe('SUM', function() {
-        it('should return the sum of two rounded numbers', function () {
-            assert.strictEqual(calculateNumber('SUM', 1.4, 4.5)).to.equal(6);
-        });
-    });
+describe('calculateNumber using Chai', () => {
+        it('should return the sum of two rounded numbers', () => {
+            except(calculateNumber('SUM', 1.4, 4.5)).to.equal(6);
+	});
 
-    describe('SUBTRACT', function() {
-        it('should return the difference of two rounded numbers', function () {
-            assert.strictEqual(calculateNumber('SUBTRACT', 1.4, 4.5)).to.equal(-4);
-        });
-    });
-
-    describe('DIVIDE', function() {
-        it('should return the quotient of two rounded numbers', function () {
-            assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5)).to.be.closeTo(0.2, 0.05);
+        it('should return the difference of two rounded numbers', () => {
+            except(calculateNumber('SUBTRACT', 1.4, 4.5)).to.equal(-4);
         });
 
-        it('should return "Error" when dividing by zero', function () {
-            assert.strictEqual(calculateNumber('DIVIDE', 1.4, 0)).to.equal('Error');
+        it('should return the quotient of two rounded numbers', () => {
+            except(calculateNumber('DIVIDE', 6, 2)).to.equal(3);
         });
-    });
+
+        it('should return "Error" when dividing by zero', () => {
+            except(calculateNumber('DIVIDE', 1.4, 0)).to.equal('Error');
+        });
 });
