@@ -2,10 +2,10 @@ const fs = require('fs');
 
 function countStudents(path) {
 	const promise = (res, rej) => {
-		fs.readfile(path, (err, data) => {
+		fs.readFile(path, (err, data) => {
 			if (err) rej(Error('Cannot load the database'));
 			if (data) {
-				let newData = data.toStirng().split('\n');
+				let newData = data.toString().split('\n');
 				newData = newData.slice(1, newData.length -1);
 				console.log(`Number of students: ${newData.length}`);
 
@@ -16,7 +16,7 @@ function countStudents(path) {
 				});
 				for (const cls in obj) {
 					if (cls) {
-						console.log(`Number of students in ${cls}: ${obj[cls].length}. List: ${obj[cls].join(',')});
+						console.log(`Number of students in ${cls}: ${obj[cls].length}. List: ${obj[cls].join(',')}`);
 						}
 					}
 				}
