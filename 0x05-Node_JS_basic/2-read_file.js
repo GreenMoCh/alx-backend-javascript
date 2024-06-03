@@ -14,7 +14,7 @@ function countStudents(path) {
 		});
 		for (const cls in obj) {
 			if (cls) {
-				console.log(`Number of students is ${cls}: ${obj[cls].length}. List: ${obj[cls].join(',')}`);
+				console.log(`Number of students in ${cls}: ${obj[cls].length}. List: ${obj[cls].join(',')}`);
 			}
 		}
 	} catch (err) {
