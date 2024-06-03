@@ -1,14 +1,7 @@
-import express from 'express';
-import routes from './routes';
+const express = require('express');
+const router = require('./routes');
 
 const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use((req, res, next) => {
-    req.dbFilePath = process.argv[2];
-    next();
-});
 
 app.use('/', routes);
 
