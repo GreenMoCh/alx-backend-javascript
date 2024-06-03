@@ -15,9 +15,9 @@ function countStudents(filePath) {
 				return;
 			}
 
-			const studentsRecoreds = lines.slice(1);
-			const numberOfStudents = studentsRecoreds.length;
-			console.log(`Number of students: ${numberofStudents}`);
+			const studentsRecords = lines.slice(1);
+			const numberOfStudents = studentsRecords.length;
+			console.log(`Number of students: ${numberOfStudents}`);
 
 			const fieldCounts = {};
 
@@ -27,7 +27,7 @@ function countStudents(filePath) {
 				if (!fieldCounts[field]) {
 					fieldCounts[field] = [];
 				}
-				filedCounts[field].push(firstname);
+				fieldCounts[field].push(firstname);
 			});
 
 			for (const field in fieldCounts) {
